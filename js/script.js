@@ -1,8 +1,14 @@
-const searchContainer = document.getElementById('search-container');
+const searchContainer = document.querySelector('.search-container');
 const gallery = document.querySelector('#gallery');
 const cards = document.getElementsByClassName('card');
 const cardContainer = document.querySelector(".card-img-container");
 // console.log(cardContainer);
+
+searchContainer.insertAdjacentHTML('beforeend', `
+<form action="#" method="get">
+    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+</form>`);
 
 /**  FETCH API **/
 
@@ -42,6 +48,7 @@ function generateCard(data) {
     [...cards].forEach(card => {
         // console.log(card);
         card.addEventListener('click', (e) => {
+            console.log(e.target);
             generateWindow(data[e.target]);
         })
     });
