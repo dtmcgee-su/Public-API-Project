@@ -52,24 +52,21 @@ function fetchData(url){
 Promise.all([
     fetchData('https://randomuser.me/api/')
 ])
-.then(data => console.log(
-    data[0].results[0].picture.thumbnail,
-    data[0].results[0].name.first,
-    data[0].results[0].name.last,
-    data[0].results[0].email,
-    data[0].results[0].location.city))
-// .then(name => console.log(name[0].results[0].name.first, name[0].results[0].name.last))
-// .then(email => console.log(email.results[0].email))
-// .then(city => console.log(city.results[0].location.city))
+.then(data => generateCard(data))
 
-// fetchData('https://randomuser.me/api/')
-//     .then(img => console.log(img.results[0].picture.thumbnail))
 
-// fetchData('https://randomuser.me/api/')
-//     .then(name => console.log(name.results[0].name.first, name.results[0].name.last))
-
-// fetchData('https://randomuser.me/api/')
-//     .then(email => console.log(email.results[0].email))
-
-// fetchData('https://randomuser.me/api/')
-//     .then(city => console.log(city.results[0].location.city))
+function generateCard(data){
+    const html = `
+    <div class="card">
+        <div class="card-img-container">
+            <img class="card-img" src="${data[0].results[0].picture.thumbnail}" alt="profile picture">
+        </div>
+        <div class="card-info-container">
+            <h3 id="name" class="card-name cap">${data[0].results[0].name.first} ${ data[0].results[0].name.last}</h3>
+            <p class="card-text">${data[0].results[0].email}</p>
+            <p class="card-text cap">${data[0].results[0].location.city}, ${data[0].results[0].location.state}</p>
+        </div>
+    </div>
+    `;
+    card.innerHTML = html;
+}
