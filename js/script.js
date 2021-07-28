@@ -23,7 +23,6 @@ fetchData('https://randomuser.me/api/?nat=us&results=12')
     .then(data => {
          generateCard(data);
     })
-    // .then(data => generateWindow(data))
 
 /**  FUNCTIONS **/
 
@@ -55,17 +54,14 @@ function generateCard(data) {
 }
 
 function generateWindow(data, i){
-    // console.log(data);
-    // console.log(i);
-    // console.log(data.results[i]);
     let modalContainer = document.createElement('div');
     modalContainer.className = 'modal-container';
     gallery.insertAdjacentElement('afterend', modalContainer);
-    // console.log(data);
-      // console.log(modalContainer);
+    let info = data.results[i];
+
     fixPhone(data, i);
     fixDate(data, i);
-    let info = data.results[i];
+
     modalContainer.innerHTML = `
         <div class="modal-container">
         <div class="modal">
@@ -82,14 +78,23 @@ function generateWindow(data, i){
             </div>
         </div>
         `;
-        // console.log(data);
+
     const closeBtn = document.getElementById('modal-close-btn');
-        // console.log(closeBtn);
     closeBtn.addEventListener('click', () => {
         modalContainer.style.display = 'none';
-    })
+    });
 }
 
+//Fixes Phone Format to Display Info Properly
+function fixPhone(data, i) {
+    let info = data.results[i];
+    let phoneNumRaw = info.phone;
+    areaCode = phoneNumRaw.split('-')[0];
+    firstThree = phoneNumRaw.split('-')[1];
+    lastFour = phoneNumRaw.split('-')[2];
+}
+
+//Fixes Date format to Display Info Properly
 function fixDate(data, i){
     let info = data.results[i];
     let date = (info.dob.date);
@@ -99,10 +104,3 @@ function fixDate(data, i){
     year = date.split('-')[0];
 }
 
-function fixPhone(data, i) {
-    let info = data.results[i];
-    let phoneNumRaw = info.phone;
-    areaCode = phoneNumRaw.split('-')[0];
-    firstThree = phoneNumRaw.split('-')[1];
-    lastFour = phoneNumRaw.split('-')[2];
-}
