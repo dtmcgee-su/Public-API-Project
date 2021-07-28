@@ -21,8 +21,7 @@ async function fetchData(url) {
 
 fetchData('https://randomuser.me/api/?nat=us&results=12')
     .then(data => {
-         generateCard(data),
-        generateWindow(data);
+         generateCard(data);
     })
     // .then(data => generateWindow(data))
 
@@ -46,27 +45,36 @@ function generateCard(data) {
     }
     //https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
     [...cards].forEach((card, i) => {
+        // console.log(i);
         // console.log(card);
         card.addEventListener('click', (e) => {
-            console.log(e.currentTarget);
+            // console.log(e.currentTarget);
             if (card === e.currentTarget){
-                generateWindow(data[i]);
+                // console.log(card);
+                // console.log(i);
+                generateWindow(data, i);
+                // console.log(data[`${i}`]);
+                // console.log(data[0]);
+                // generateWindow(data[i]);
                 // return data.results[i];
                 // console.log(data.results[i]);
             }
         })
     });
+
 }
 
-function generateWindow(data){
+function generateWindow(data, i){
     console.log(data);
+    console.log(i);
+    console.log(data.results[i]);
     let modalContainer = document.createElement('div');
     modalContainer.className = 'modal-container';
     gallery.insertAdjacentElement('afterend', modalContainer);
-    console.log(data);
+    // console.log(data);
       // console.log(modalContainer);
-    fixDate(data);
-    let info = data.results[0];
+    fixDate(data, i);
+    let info = data.results[i];
     modalContainer.innerHTML = `
         <div class="modal-container">
         <div class="modal">
@@ -91,8 +99,8 @@ function generateWindow(data){
     })
 }
 
-function fixDate(data){
-    let info = data.results[0];
+function fixDate(data, i){
+    let info = data.results[i];
     let date = (info.dob.date);
     day = date.split('-')[1];
     month = date.split('-')[2];
