@@ -45,19 +45,9 @@ function generateCard(data) {
     }
     //https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
     [...cards].forEach((card, i) => {
-        // console.log(i);
-        // console.log(card);
         card.addEventListener('click', (e) => {
-            // console.log(e.currentTarget);
             if (card === e.currentTarget){
-                // console.log(card);
-                // console.log(i);
                 generateWindow(data, i);
-                // console.log(data[`${i}`]);
-                // console.log(data[0]);
-                // generateWindow(data[i]);
-                // return data.results[i];
-                // console.log(data.results[i]);
             }
         })
     });
@@ -65,14 +55,15 @@ function generateCard(data) {
 }
 
 function generateWindow(data, i){
-    console.log(data);
-    console.log(i);
-    console.log(data.results[i]);
+    // console.log(data);
+    // console.log(i);
+    // console.log(data.results[i]);
     let modalContainer = document.createElement('div');
     modalContainer.className = 'modal-container';
     gallery.insertAdjacentElement('afterend', modalContainer);
     // console.log(data);
       // console.log(modalContainer);
+    fixPhone(data, i);
     fixDate(data, i);
     let info = data.results[i];
     modalContainer.innerHTML = `
@@ -85,7 +76,7 @@ function generateWindow(data, i){
                 <p class="modal-text">${info.email}</p>
                 <p class="modal-text cap">${info.location.city}</p>
                 <hr>
-                <p class="modal-text">${info.phone}</p>
+                <p class="modal-text">${areaCode} ${firstThree}-${lastFour}</p>
                 <p class="modal-text">${info.location.street.number} ${info.location.street.name}, ${info.location.city}, ${info.location.state} ${info.location.postcode}</p>
                 <p class="modal-text">Birthday: ${day}/${month}/${year}</p>
             </div>
@@ -106,4 +97,12 @@ function fixDate(data, i){
     month = date.split('-')[2];
     month = month.substring(0,2);
     year = date.split('-')[0];
+}
+
+function fixPhone(data, i) {
+    let info = data.results[i];
+    let phoneNumRaw = info.phone;
+    areaCode = phoneNumRaw.split('-')[0];
+    firstThree = phoneNumRaw.split('-')[1];
+    lastFour = phoneNumRaw.split('-')[2];
 }
