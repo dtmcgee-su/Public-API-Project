@@ -16,16 +16,16 @@ async function fetchData(url) {
     return await fetch(url)
         //check status
         .then(response => response.json())
-    //catch errors
 }
 
 fetchData('https://randomuser.me/api/?nat=us&results=12')
     .then(data => {
          generateCard(data);
     })
+    .catch(error => console.log( 'Error Fetching Random User Data', error))
 
 /**  FUNCTIONS **/
-
+// Generate 12 Random employees with some basic information about themselves received from the fetch.
 function generateCard(data) {
     for (let i = 0; i < data.results.length; i++) {
         let card = document.createElement('div');
@@ -52,7 +52,7 @@ function generateCard(data) {
     });
 
 }
-
+// When a User selected a card of an employee, display more information about thhat employee
 function generateWindow(data, i){
     let modalContainer = document.createElement('div');
     modalContainer.className = 'modal-container';
