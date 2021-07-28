@@ -21,8 +21,8 @@ async function fetchData(url) {
 
 fetchData('https://randomuser.me/api/?nat=us&results=12')
     .then(data => {
-         generateCard(data);
-        //  generateWindow(data);
+         generateCard(data),
+        generateWindow(data);
     })
     // .then(data => generateWindow(data))
 
@@ -45,16 +45,21 @@ function generateCard(data) {
         `);
     }
     //https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
-    [...cards].forEach(card => {
+    [...cards].forEach((card, i) => {
         // console.log(card);
         card.addEventListener('click', (e) => {
-            console.log(e.target);
-            generateWindow(data[e.target]);
+            console.log(e.currentTarget);
+            if (card === e.currentTarget){
+                generateWindow(data[i]);
+                // return data.results[i];
+                // console.log(data.results[i]);
+            }
         })
     });
 }
 
 function generateWindow(data){
+    console.log(data);
     let modalContainer = document.createElement('div');
     modalContainer.className = 'modal-container';
     gallery.insertAdjacentElement('afterend', modalContainer);
